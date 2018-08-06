@@ -2,4 +2,8 @@
 # See https://github.com/svenfuchs/rails-i18n/tree/master/rails%2Flocale for starting points.
 
 en:
-  hello: "Hello world"
+  spree:
+    import: Import Store Credit CSV
+    example: Download Sample File
+    email_sent: "%{filename} has been successfully imported. Details will be sent shortly to you over an email."
+    user_not_found: User with this email Not found
