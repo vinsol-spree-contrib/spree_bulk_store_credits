@@ -1,6 +1,6 @@
 require 'csv'
   class NotifyStoreCreditService
-    CSV_HEADERS = { 'Email': :Email, 'Store_Credit': :Store_Credit, 'Memo': :Memo, 'Category_ID': :Category_ID, 'Status': :Status }
+    CSV_HEADERS = { 'Email': :Email, 'Store_Credit': :Store_Credit, 'Memo': :Memo, 'Status': :Status }
 
     def initialize(store_credit_updater_id, admin_email)
       @store_credit_updater = Spree::BulkStoreCreditUpdater.find_by(id: store_credit_updater_id)
@@ -22,10 +22,10 @@ require 'csv'
               @total_records += 1
               @row = row
               @user = find_user
-              if @user
-                update_stocks_with_csv_values
+              if @user && @row['Store_Credit'].scan(/\D/).empty?
+                update_store_credits_with_csv_values
               else
-                @error = Spree.t(:user_not_found)
+                @error = @user ? Spree.t(:store_credit_not_integer) : Spree.t(:user_not_found)
               end
               csv << set_row
             end
@@ -50,13 +50,15 @@ require 'csv'
       end
 
       def error_message
-        @error ? @error : 'Successfully Updated'
+        @error ? @error : Spree.t(:successfull_update)
       end
 
-      def update_stocks_with_csv_values
+      def update_store_credits_with_csv_values
         admin = Spree::User.admin.first
-        store_credit = Spree::StoreCredit.new(amount: @row['Store_Credit'].to_f, created_by_id: admin.id, currency: "USD", category_id: @row['Category_ID'], memo: @row['Memo'])
+        category = Spree::StoreCreditCategory.first
+        store_credit = Spree::StoreCredit.new(amount: @row['Store_Credit'].to_f, created_by_id: admin.id, currency: "USD", category_id: category.try(:id), memo: @row['Memo'])
         @user.store_credits << store_credit
+        @error = store_credit.valid? ? nil : store_credit.errors.full_messages.join(',')
         @successfull_records += 1
       end
 

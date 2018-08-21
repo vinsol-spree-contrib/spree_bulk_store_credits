@@ -8,7 +8,7 @@ Spree::Admin::UsersController.class_eval do
       create_store_credit_updater
       redirect_to admin_users_path, notice: Spree.t(:email_sent, filename: @store_credit_updater.data_file_file_name)
     rescue
-      redirect_to admin_users_path, notice: "Invalid CSV file format."
+      redirect_to admin_users_path, notice: Spree.t(:invalid_format)
     end
   end
 

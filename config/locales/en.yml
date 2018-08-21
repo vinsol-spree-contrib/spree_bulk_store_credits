@@ -7,3 +7,6 @@ en:
     example: Download Sample File
     email_sent: "%{filename} has been successfully imported. Details will be sent shortly to you over an email."
     user_not_found: User with this email Not found
+    store_credit_not_integer: Amount not integer
+    invalid_format: Invalid CSV file format.
+    successfull_update: Successfully Updated
