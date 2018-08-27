@@ -58,8 +58,16 @@ require 'csv'
         category = Spree::StoreCreditCategory.first
         store_credit = Spree::StoreCredit.new(amount: @row['Store_Credit'].to_f, created_by_id: admin.id, currency: "USD", category_id: category.try(:id), memo: @row['Memo'])
         @user.store_credits << store_credit
-        @error = store_credit.valid? ? nil : store_credit.errors.full_messages.join(',')
-        @successfull_records += 1
+        set_error_message(store_credit)
+      end
+
+      def set_error_message(store_credit)
+        if store_credit.valid?
+          @error = nil
+          @successfull_records += 1
+        else
+          @error = store_credit.errors.full_messages.join(',')
+        end
       end
 
       def find_user

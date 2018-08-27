@@ -16,7 +16,11 @@ Spree::Admin::UsersController.class_eval do
 
     def create_store_credit_updater
       @store_credit_updater = Spree::BulkStoreCreditUpdater.create(data_file: params[:file])
-      NotifyStoreCreditService.delay(run_at: 1.minutes.from_now).new(@store_credit_updater.id, try_spree_current_user.email)
+      if @store_credit_updater.valid?
+        NotifyStoreCreditService.delay(run_at: 1.minutes.from_now).new(@store_credit_updater.id, try_spree_current_user.email)
+      else
+        raise 'Invalid Format Exception'
+      end
     end
 
 end
