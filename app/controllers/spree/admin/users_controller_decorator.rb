@@ -12,6 +12,20 @@ Spree::Admin::UsersController.class_eval do
     end
   end
 
+  def bulk_store_credits
+    @search = Spree::User.ransack(params[:q])
+    @collection = @search.result.present? ? @search.result : Spree::User.all
+  end
+
+  def update_bulk_credits
+    begin
+      list_store_credit_updater
+      redirect_to admin_users_path, notice: Spree.t(:email_sent_for_users_credit)
+    rescue
+      redirect_to admin_users_path, notice: Spree.t(:integer_value_only)
+    end
+  end
+
   private
 
     def create_store_credit_updater
@@ -23,4 +37,11 @@ Spree::Admin::UsersController.class_eval do
       end
     end
 
+    def list_store_credit_updater
+      if params[:credit_value].scan(/\D/).empty?
+        ListStoreCreditUpdater.delay(run_at: 1.minutes.from_now).new(params[:users].reject(&:empty?), try_spree_current_user.email, params[:credit_value])
+      else
+        raise 'Please Enter Integer Value as Credit Value'
+      end
+    end
 end
