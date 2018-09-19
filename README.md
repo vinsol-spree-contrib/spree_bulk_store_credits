@@ -1,6 +1,10 @@
 SpreeBulkStoreCredits
 =====================
 
+Try Spree Digital Assets for Spree 3-4 with direct deployment on Heroku:
+
+[![Deploy](https://www.herokucdn.com/deploy/button.svg)](https://heroku.com/deploy?template=https://github.com/himanshumishra31/teststorecredits)
+
 Introduction goes here.
 
 ## Installation
