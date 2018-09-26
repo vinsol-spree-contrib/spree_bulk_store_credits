@@ -6,6 +6,7 @@
   <%= form_tag import_store_credits_admin_users_path, multipart: true, class: 'form-inline', data: { hook: "csv_form" } do %>
     <%= file_field_tag :file, class: 'file-browse' %>
     <%= submit_tag Spree.t(:import), class: 'btn-success btn' %>
+    <br>
     <%= link_to Spree.t(:example) , sample_store_credit_csv_admin_users_path, class: 'sample-download' %>
   <% end %>
 
@@ -30,6 +31,9 @@
 <% end %>
 
 <%= form_tag update_bulk_credits_admin_users_path, method: :post do %>
+  <%= text_field_tag :credit_value, '', placeholder: Spree.t(:credit_value), class: 'form-control' %>
+  <%= submit_tag Spree.t(:add_value), class: 'btn-success btn' %>
+  <%= hidden_field_tag "users[]" %>
   <% if @collection.any? %>
     <table class="table" id="listing_users" data-hook>
       <thead>
@@ -62,8 +66,5 @@
       <%= link_to Spree.t(:add_one), new_object_url %>!
     </div>
   <% end %>
-  <%= text_field_tag :credit_value, '', placeholder: Spree.t(:credit_value), class: 'form-control' %>
-  <%= submit_tag Spree.t(:add_value), class: 'btn-success btn' %>
-  <%= hidden_field_tag "users[]" %>
 <% end %>
 
