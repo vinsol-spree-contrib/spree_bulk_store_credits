@@ -1,3 +1,6 @@
+<%= javascript_include_tag 'spree/backend/infinite_scroller' %>
+<%= javascript_include_tag 'spree/backend/user_selection_manager' %>
+
 <% content_for :page_title do %>
   <%= Spree.t(:bulk_store_credit) %>
 <% end %>
@@ -34,8 +37,9 @@
   <%= text_field_tag :credit_value, '', placeholder: Spree.t(:credit_value), class: 'form-control' %>
   <%= submit_tag Spree.t(:add_value), class: 'btn-success btn' %>
   <%= hidden_field_tag "users[]" %>
+
   <% if @collection.any? %>
-    <table class="table" id="listing_users" data-hook>
+    <table class="table" id="listing_users">
       <thead>
         <tr data-hook="admin_users_index_headers">
           <th>
@@ -46,18 +50,8 @@
           </th>
         </tr>
       </thead>
-      <tbody>
-        <% @collection.each do |user|%>
-          <tr id="<%= spree_dom_id user %>" data-hook="admin_users_index_rows">
-            <td class='user_email'><%=link_to user.email, edit_admin_user_url(user) %></td>
-            <td class="actions actions-2 text-center">
-              <%= check_box_tag 'users[]', user.id %>
-            </td>
-            <td>
-
-            </td>
-          </tr>
-        <% end %>
+      <tbody data-infinite-scroll='collection'>
+        <%= render 'bulk_store_credit_users', collection: @collection %>
       </tbody>
     </table>
   <% else %>
@@ -68,3 +62,8 @@
   <% end %>
 <% end %>
 
+<div id="infinite-scroll">
+  <div data-pagination='on' class="hide">
+    <%= paginate @collection %>
+  </div>
+</div>

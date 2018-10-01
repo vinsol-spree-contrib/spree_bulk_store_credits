@@ -1,0 +1,7 @@
+$('tbody[data-infinite-scroll="collection"]').append('<%= j render "bulk_store_credit_users", collection: @collection %>');
+<% if @collection.next_page.present? %>
+  $('#infinite-scroll').find('[data-pagination="on"] .pagination').replaceWith('<%= j paginate @collection %>');
+<% else %>
+  $(window).off('scroll');
+  $('#infinite-scroll').find('[data-pagination="on"]').replaceWith("<p class='text-center help-block'>End of list.</p>");
+<% end %>
