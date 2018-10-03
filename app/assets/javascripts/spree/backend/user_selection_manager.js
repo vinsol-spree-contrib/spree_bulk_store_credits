@@ -1,13 +1,13 @@
-function UserSelectorManager(options){
+function UserSelectionManager(options){
   this.tableBodySelector = options.tableBodySelector;
   this.checkboxSelector = options.checkboxSelector;
 }
 
-UserSelectorManager.prototype.init = function(){
+UserSelectionManager.prototype.init = function(){
   $(this.tableBodySelector).on('change', this.checkboxSelector, this.hideRow());
 };
 
-UserSelectorManager.prototype.hideRow = function(){
+UserSelectionManager.prototype.hideRow = function(){
   var _this = this;
 
   return function(){
@@ -16,7 +16,7 @@ UserSelectorManager.prototype.hideRow = function(){
   };
 };
 
-UserSelectorManager.prototype.moveRow = function(changedCheckbox){
+UserSelectionManager.prototype.moveRow = function(changedCheckbox){
   var _this = this;
 
   return function(){
@@ -27,16 +27,21 @@ UserSelectorManager.prototype.moveRow = function(changedCheckbox){
       $(_this.tableBodySelector).prepend($(this));
     }else{
       //moving row to the top of unselected rows
-      $($(_this.checkboxSelector + ':checked').last().parents('tr')[0]).after($(this));
+      var $latestSelectedCheckbox = $(_this.checkboxSelector + ':checked').last();
+      if($latestSelectedCheckbox.length == 0){
+        $(_this.tableBodySelector).prepend($(this));
+      }else{
+        $($latestSelectedCheckbox.parents('tr')[0]).after($(this));        
+      }
     }
     $(this).fadeIn('slow', 'linear');
   };
 };
 
 $(function(){
-  var userSelectorManagerArguments = { tableBodySelector: '#listing_users tbody',
+  var userSelectionManagerArguments = { tableBodySelector: '#listing_users tbody',
                                        checkboxSelector: '[data-checkbox="user_select"]' },
-      userSelectorManager = new UserSelectorManager(userSelectorManagerArguments);
+      userSelectionManager = new UserSelectionManager(userSelectionManagerArguments);
 
-  userSelectorManager.init();
+  userSelectionManager.init();
 });
