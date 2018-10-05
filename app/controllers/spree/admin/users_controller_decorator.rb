@@ -17,7 +17,9 @@ Spree::Admin::UsersController.class_eval do
 
   def bulk_store_credits
     @search = Spree::User.ransack(params[:q])
-    @collection = @search.result.present? ? @search.result.page(params[:page]).per(Spree::BulkStoreCreditUpdater::USER_PER_PAGE) : Spree::User.page(params[:page]).per(Spree::BulkStoreCreditUpdater::USER_PER_PAGE)
+    @collection = @search.result.present? ? @search.result : Spree::User.all
+    @collection = @collection.page(params[:page]).per(Spree::BulkStoreCreditUpdater::USER_PER_PAGE)
+
     respond_to do |format|
       format.html
       format.js
@@ -53,4 +55,5 @@ Spree::Admin::UsersController.class_eval do
         raise 'Please Enter Integer Value as Credit Value'
       end
     end
+
 end
