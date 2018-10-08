@@ -19,7 +19,7 @@ require 'csv'
           @users_ids.each do |user_id|
             @error = nil
             @total_records += 1
-            @user = Spree::User.find_by_id (user_id.to_i)
+            @user = Spree::User.find_by_id(user_id.to_i)
             if @user
               update_store_credits_with_credit_value
             else

@@ -1,4 +1,5 @@
 Spree::Admin::UsersController.class_eval do
+
   def sample_store_credit_csv
     send_file STORE_CREDIT_CSV_FILE[:sample_store_credit_file]
   end
@@ -6,9 +7,11 @@ Spree::Admin::UsersController.class_eval do
   def import_store_credits
     begin
       create_store_credit_updater
-      redirect_to admin_users_path, notice: Spree.t(:email_sent, filename: @store_credit_updater.data_file_file_name)
+      flash[:success] = Spree.t(:email_sent, filename: @store_credit_updater.data_file_file_name)
+      redirect_to bulk_store_credits_admin_users_path
     rescue
-      redirect_to admin_users_path, notice: Spree.t(:invalid_format)
+      flash[:error] = Spree.t(:invalid_format)
+      redirect_to bulk_store_credits_admin_users_path
     end
   end
 
@@ -24,9 +27,11 @@ Spree::Admin::UsersController.class_eval do
   def update_bulk_credits
     begin
       list_store_credit_updater
-      redirect_to admin_users_path, notice: Spree.t(:email_sent_for_users_credit)
+      flash[:success] = Spree.t(:email_sent_for_users_credit)
+      redirect_to bulk_store_credits_admin_users_path
     rescue
-      redirect_to admin_users_path, notice: Spree.t(:integer_value_only)
+      flash[:error] = Spree.t(:integer_value_only)
+      redirect_to bulk_store_credits_admin_users_path
     end
   end
 
@@ -42,7 +47,7 @@ Spree::Admin::UsersController.class_eval do
     end
 
     def list_store_credit_updater
-      if params[:credit_value].scan(/\D/).empty?
+      if params[:credit_value].scan(/\D/).empty? && params[:credit_value].present?
         ListStoreCreditUpdater.delay(run_at: 1.minutes.from_now).new(params[:users].reject(&:empty?), try_spree_current_user.email, params[:credit_value])
       else
         raise 'Please Enter Integer Value as Credit Value'
