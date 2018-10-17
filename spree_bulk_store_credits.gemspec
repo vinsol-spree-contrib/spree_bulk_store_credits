@@ -8,13 +8,12 @@ Gem::Specification.new do |s|
   s.platform    = Gem::Platform::RUBY
   s.name        = 'spree_bulk_store_credits'
   s.version     = SpreeBulkStoreCredits.version
-  s.summary     = 'Add extension summary here'
-  s.description = 'Add (optional) extension description here'
+  s.summary     = 'This extension allows the admin to provide store credits in bulk to users through csv import or multi-select user list from the users admin panel.'
+  s.description = 'This extension allows the admin to provide store credits in bulk to users through csv import or multi-select user list from the users admin panel.'
   s.required_ruby_version = '>= 2.2.7'
 
-  s.author    = 'You'
-  s.email     = 'you@example.com'
-  s.homepage  = 'https://github.com/your-github-handle/spree_bulk_store_credits'
+  s.author    = ['Vinsol', 'Tanmay', 'Himanshu']
+  s.email     = ['info@vinsol.com', 'tanmay@vinsol.com', 'himanshu.mishra@vinsol.com']
   s.license = 'BSD-3-Clause'
 
   # s.files       = `git ls-files`.split("\n").reject { |f| f.match(/^spec/) && !f.match(/^spec\/fixtures/) }

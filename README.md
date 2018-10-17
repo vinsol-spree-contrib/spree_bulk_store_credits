@@ -1,11 +1,11 @@
 SpreeBulkStoreCredits
 =====================
 
-Try Spree Digital Assets for Spree 3-4 with direct deployment on Heroku:
+This extension allows the admin to provide store credits in bulk to users through csv import or multi-select user list from the users admin panel.
+
+Try Spree Bulk Store Credit for Spree 3-4 with direct deployment on Heroku:
 
 [![Deploy](https://www.herokucdn.com/deploy/button.svg)](https://heroku.com/deploy?template=https://github.com/himanshumishra31/teststorecredits)
-
-Introduction goes here.
 
 ## Installation
 
@@ -45,10 +45,8 @@ require 'spree_bulk_store_credits/factories'
 ```
 
 
-## Contributing
+## Credits
 
-If you'd like to contribute, please take a look at the
-[instructions](CONTRIBUTING.md) for installing dependencies and crafting a good
-pull request.
+[![vinsol.com: Ruby on Rails, iOS and Android developers](http://vinsol.com/vin_logo.png "Ruby on Rails, iOS and Android developers")](http://vinsol.com)
 
-Copyright (c) 2018 [name of extension creator], released under the New BSD License
+Copyright (c) 2018 [vinsol.com](http://vinsol.com "Ruby on Rails, iOS and Android developers"), released under the New MIT License
