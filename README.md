@@ -44,6 +44,10 @@ Simply add this require statement to your spec_helper:
 require 'spree_bulk_store_credits/factories'
 ```
 
+## See It In Action
+<a href="http://www.youtube.com/watch?feature=player_embedded&v=iAMM7npK3vg
+" target="_blank"><img src="http://img.youtube.com/vi/iAMM7npK3vg/0.jpg" 
+alt="Youtube Video Tutorial" /></a>
 
 ## Credits
 
