@@ -2,4 +2,18 @@
 # See https://github.com/svenfuchs/rails-i18n/tree/master/rails%2Flocale for starting points.
 
 en:
-  hello: "Hello world"
+  spree:
+    import: Import Store Credit CSV
+    example: Download Sample File
+    email_sent: "%{filename} has been successfully imported. Details will be sent shortly to you over an email."
+    user_not_found: User with this email Not found
+    store_credit_not_integer: Amount not integer
+    invalid_format: Invalid CSV file format.
+    successfull_update: Successfully Updated
+    bulk_store_credit: Bulk Store Credit
+    add_store_credit: Add Store Credit
+    credit_value: Credit Value
+    add_value: Give Store Credit
+    email_sent_for_users_credit: Details will be sent shortly to you over an email
+    integer_value_only: Please Enter Integer Value as Credit Value
+    admin_added_via_list: Admin Added Via List

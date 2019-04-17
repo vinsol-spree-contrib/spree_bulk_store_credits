@@ -1,0 +1,69 @@
+<%= javascript_include_tag 'spree/backend/infinite_scroller' %>
+<%= javascript_include_tag 'spree/backend/user_selection_manager' %>
+
+<% content_for :page_title do %>
+  <%= Spree.t(:bulk_store_credit) %>
+<% end %>
+
+<% content_for :page_actions do %>
+  <%= form_tag import_store_credits_admin_users_path, multipart: true, class: 'form-inline', data: { hook: "csv_form" } do %>
+    <%= file_field_tag :file, class: 'file-browse' %>
+    <%= submit_tag Spree.t(:import), class: 'btn-success btn' %>
+    <br>
+    <%= link_to Spree.t(:example) , sample_store_credit_csv_admin_users_path, class: 'sample-download' %>
+  <% end %>
+
+<% end %>
+
+<% content_for :table_filter_title do %>
+  <%= Spree.t(:search) %>
+<% end %>
+
+<% content_for :table_filter do %>
+  <div data-hook="admin_users_bulk_credits">
+    <%= search_form_for [:admin, @search], url: spree.bulk_store_credits_admin_users_path do |f| %>
+      <div class="form-group">
+        <%= f.label Spree.t(:email) %>
+        <%= f.text_field :email_cont, class: "form-control js-quick-search-target" %>
+      </div>
+      <div data-hook="admin_users_index_search_buttons" class="form-actions">
+        <%= button Spree.t(:search), 'search' %>
+      </div>
+    <% end %>
+  </div>
+<% end %>
+
+<%= form_tag update_bulk_credits_admin_users_path, method: :post do %>
+  <%= text_field_tag :credit_value, '', placeholder: Spree.t(:credit_value), class: 'form-control' %>
+  <%= submit_tag Spree.t(:add_value), class: 'btn-success btn' %>
+  <%= hidden_field_tag "users[]" %>
+
+  <% if @collection.any? %>
+    <table class="table" id="listing_users">
+      <thead>
+        <tr data-hook="admin_users_index_headers">
+          <th>
+            <%= sort_link @search,:email, Spree.t(:user), {}, {title: 'users_email_title'} %>
+          </th>
+          <th data-hook="admin_users_index_header_actions" class="actions text-center">
+            <%= Spree.t(:add_store_credit) %>
+          </th>
+        </tr>
+      </thead>
+      <tbody data-infinite-scroll='collection'>
+        <%= render 'bulk_store_credit_users', collection: @collection %>
+      </tbody>
+    </table>
+  <% else %>
+    <div class="alert alert-info no-objects-found">
+      <%= Spree.t(:no_resource_found, resource: plural_resource_name(Spree.user_class)) %>,
+      <%= link_to Spree.t(:add_one), new_object_url %>!
+    </div>
+  <% end %>
+<% end %>
+
+<div id="infinite-scroll">
+  <div data-pagination='on' class="hide">
+    <%= paginate @collection %>
+  </div>
+</div>
